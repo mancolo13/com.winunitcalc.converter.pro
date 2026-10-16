@@ -2,25 +2,27 @@ import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import '../../services/routing_service.dart';
 
+
 class Tab1Screen extends StatefulWidget {
   const Tab1Screen({super.key});
-
   @override
   State<Tab1Screen> createState() => _Tab1ScreenState();
 }
 
 class _Tab1ScreenState extends State<Tab1Screen> {
-  int _score = 92;
-  bool _active = true;
+  double _inputVal = 100;
 
   @override
   Widget build(BuildContext context) {
+    final km = _inputVal;
+    final miles = _inputVal * 0.621371;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Win • Converter'),
+        title: const Text('Win • UnitCalc Pro'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.stars_rounded, color: AppTheme.primaryColor),
+            icon: const Icon(Icons.calculate, color: AppTheme.secondaryColor),
             onPressed: () => RoutingService.openRegistrationUrl(),
           ),
         ],
@@ -29,83 +31,72 @@ class _Tab1ScreenState extends State<Tab1Screen> {
         padding: const EdgeInsets.all(16),
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [AppTheme.primaryColor.withValues(alpha: 0.3), AppTheme.surfaceColor],
+                colors: [AppTheme.primaryColor.withValues(alpha: 0.35), AppTheme.surfaceColor],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(color: AppTheme.primaryColor.withValues(alpha: 0.4)),
             ),
             child: Column(
               children: [
+                const Text('DISTANCE CONVERSION', style: TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+                const SizedBox(height: 14),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text('Converter Health', style: const TextStyle(fontSize: 16, color: Colors.white70)),
-                    Switch(
-                      value: _active,
-                      activeThumbColor: AppTheme.primaryColor,
-                      onChanged: (v) => setState(() => _active = v),
+                    Column(
+                      children: [
+                        Text('${km.toStringAsFixed(0)} KM', style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                        const Text('Metric', style: TextStyle(color: Colors.white60, fontSize: 12)),
+                      ],
+                    ),
+                    const Icon(Icons.swap_horiz, size: 28, color: AppTheme.secondaryColor),
+                    Column(
+                      children: [
+                        Text('${miles.toStringAsFixed(2)} MI', style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.secondaryColor)),
+                        const Text('Imperial', style: TextStyle(color: Colors.white60, fontSize: 12)),
+                      ],
                     ),
                   ],
-                ),
-                const SizedBox(height: 12),
-                Text('$_score%', style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 8),
-                LinearProgressIndicator(
-                  value: 0.92,
-                  backgroundColor: Colors.white12,
-                  color: AppTheme.primaryColor,
-                  minHeight: 8,
-                  borderRadius: BorderRadius.circular(4),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(child: _buildMetric('Total', '1,840', Icons.analytics)),
-              const SizedBox(width: 12),
-              Expanded(child: _buildMetric('Active', '99.2%', Icons.speed)),
-            ],
+          const Text('Adjust Value', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Slider(
+            value: _inputVal,
+            min: 1,
+            max: 500,
+            activeColor: AppTheme.primaryColor,
+            onChanged: (v) => setState(() => _inputVal = v),
           ),
           const SizedBox(height: 16),
-          ...List.generate(3, (i) => Card(
-            color: AppTheme.surfaceColor,
-            margin: const EdgeInsets.only(bottom: 10),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: AppTheme.primaryColor.withValues(alpha: 0.2),
-                child: Icon(Icons.check, color: AppTheme.primaryColor),
-              ),
-              title: Text('Converter Priority ${i + 1}'),
-              subtitle: Text('Progress: Normal • Level ${i + 1}'),
-              trailing: const Icon(Icons.chevron_right, color: Colors.white38),
-              onTap: () => setState(() => _score = (_score + 1) % 100),
-            ),
-          )),
+          _presetCard('Celsius to Fahrenheit', '25°C = 77.0°F'),
+          _presetCard('Kilograms to Pounds', '80 kg = 176.37 lbs'),
+          _presetCard('Litres to US Gallons', '50 L = 13.21 gal'),
         ],
       ),
     );
   }
 
-  Widget _buildMetric(String t, String v, IconData ic) {
+  Widget _presetCard(String t, String v) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: AppTheme.surfaceColor, borderRadius: BorderRadius.circular(16)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(color: AppTheme.surfaceColor, borderRadius: BorderRadius.circular(14)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(ic, color: AppTheme.secondaryColor, size: 28),
-          const SizedBox(height: 8),
-          Text(t, style: const TextStyle(color: Colors.white60, fontSize: 13)),
-          Text(v, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(t, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+          Text(v, style: const TextStyle(color: AppTheme.secondaryColor, fontWeight: FontWeight.bold)),
         ],
       ),
     );
   }
 }
+

@@ -32,27 +32,26 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: AppTheme.surfaceColor,
         indicatorColor: AppTheme.primaryColor.withValues(alpha: 0.2),
         destinations: [
-        NavigationDestination(
-          icon: const Icon(Icons.calculate_outlined),
-          selectedIcon: const Icon(Icons.calculate, color: AppTheme.primaryColor),
-          label: 'Converter',
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.attach_money_outlined),
-          selectedIcon: const Icon(Icons.attach_money, color: AppTheme.primaryColor),
-          label: 'Currencies',
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.science_outlined),
-          selectedIcon: const Icon(Icons.science, color: AppTheme.primaryColor),
-          label: 'Physics',
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.history_outlined),
-          selectedIcon: const Icon(Icons.history, color: AppTheme.primaryColor),
-          label: 'History',
-        ),
-
+          NavigationDestination(
+            icon: const Icon(Icons.swap_vert_outlined),
+            selectedIcon: const Icon(Icons.swap_vert, color: AppTheme.primaryColor),
+            label: 'Converter',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.currency_exchange_outlined),
+            selectedIcon: const Icon(Icons.currency_exchange, color: AppTheme.primaryColor),
+            label: 'Currency',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.straighten_outlined),
+            selectedIcon: const Icon(Icons.straighten, color: AppTheme.primaryColor),
+            label: 'Units',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.settings_outlined),
+            selectedIcon: const Icon(Icons.settings, color: AppTheme.primaryColor),
+            label: 'Settings',
+          ),
         ],
       ),
     );
